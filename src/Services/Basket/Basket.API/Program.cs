@@ -1,10 +1,31 @@
+using Basket.API.Service;
+using BuildingBlocks.LoggingConfiguration;
+using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using BuildingBlocks.Messaging.MassTransit;
-using Basket.API.Service;
+using Serilog;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog(Logging.ConfigureLogger);
+
+builder.Services.AddAuthorization(options =>
+{
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["IdentityServer"];
+        options.Audience = "basketapi";
+    });
 
 var assembly = typeof(Program).Assembly;
 
@@ -69,6 +90,19 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+
+// Custom certificate logic
+builder.WebHost.ConfigureKestrel((ctx, options) =>
+{
+    var useCustomLocalCert = ctx.Configuration.GetValue<bool>("UseCustomLocalCert");
+    if (useCustomLocalCert)
+    {
+        options.Listen(IPAddress.Any, 8081, listenOptions =>
+        {
+            listenOptions.UseHttps("keys/cr-id-local.pfx", "Test1");
+        });
+    }
+});
 
 var app = builder.Build();
 

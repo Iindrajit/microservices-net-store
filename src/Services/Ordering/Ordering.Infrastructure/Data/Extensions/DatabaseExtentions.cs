@@ -10,6 +10,9 @@ public static class DatabaseExtentions
 
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+        if(context == null)
+            throw new InvalidOperationException("Failed to get ApplicationDbContext.");
+
         context.Database.MigrateAsync().GetAwaiter().GetResult();
 
         await SeedAsync(context);
@@ -24,28 +27,28 @@ public static class DatabaseExtentions
 
     private static async Task SeedCustomerAsync(ApplicationDbContext context)
     {
-        if (!await context.Customers.AnyAsync())
+        if (!await context.Query<Customer>().AnyAsync())
         {
-            await context.Customers.AddRangeAsync(InitialData.Customers);
-            await context.SaveChangesAsync();
+            await context.AddRangeAsync(InitialData.Customers);
+            await context.SaveChangesAsync(CancellationToken.None);
         }
     }
 
     private static async Task SeedProductAsync(ApplicationDbContext context)
     {
-        if (!await context.Products.AnyAsync())
+        if (!await context.Query<Product>().AnyAsync())
         {
-            await context.Products.AddRangeAsync(InitialData.Products);
-            await context.SaveChangesAsync();
+            await context.AddRangeAsync(InitialData.Products);
+            await context.SaveChangesAsync(CancellationToken.None);
         }
     }
 
-    private static async Task SeedOrdersWithItemsAsync(ApplicationDbContext context)
-    {
-        if (!await context.Orders.AnyAsync())
-        {
-            await context.Orders.AddRangeAsync(InitialData.OrdersWithItems);
-            await context.SaveChangesAsync();
-        }
-    }
+    //private static async Task SeedOrdersWithItemsAsync(ApplicationDbContext context)
+    //{
+    //    if (!await context.Orders.AnyAsync())
+    //    {
+    //        await context.Orders.AddRangeAsync(InitialData.OrdersWithItems);
+    //        await context.SaveChangesAsync();
+    //    }
+    //}
 }

@@ -2,6 +2,9 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# Add identity server certificate to trust store
+COPY ../cert-creation/cr-id-local.crt /usr/local/share/ca-certificates/
+RUN update-ca-certificates
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080

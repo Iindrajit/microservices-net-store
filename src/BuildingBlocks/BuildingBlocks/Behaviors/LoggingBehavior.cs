@@ -11,8 +11,15 @@ public class LoggingBehavior<TRequest, TResponse>
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        logger.LogInformation("[START] Handle request={Request} - Response={Response} - RequestData={RequestData}",
-            typeof(TRequest).Name, typeof(TResponse).Name, request);
+        var traceId = Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString(); // Ensure a TraceId
+
+        logger.LogInformation(
+            @"[START] Handle request={Request} - Response={Response} - 
+                RequestData={RequestData}. TraceId: {TraceId}",
+            typeof(TRequest).Name, 
+            typeof(TResponse).Name, 
+            request, 
+            traceId);
 
         var timer = new Stopwatch();
         timer.Start();
@@ -20,12 +27,20 @@ public class LoggingBehavior<TRequest, TResponse>
         var response = await next();
 
         timer.Stop();
-        var timeTaken = timer.Elapsed;
-        if (timeTaken.Seconds > 3) // if the request is greater than 3 seconds, then log the warnings
-            logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken} seconds.",
-                typeof(TRequest).Name, timeTaken.Seconds);
+        var timeTaken = timer.Elapsed.TotalSeconds;
 
-        logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, typeof(TResponse).Name);
+        if (timeTaken > 3) // if the request is greater than 3 seconds, then log the warnings
+            logger.LogWarning(
+                "[PERFORMANCE] The request {Request} took {TimeTaken} seconds. TraceId: {TraceId}",
+                typeof(TRequest).Name, 
+                timeTaken,
+                traceId);
+
+        logger.LogInformation("[END] Handled {Request} with {Response}. TraceId: {TraceId}", 
+            typeof(TRequest).Name, 
+            typeof(TResponse).Name,
+            traceId);
+
         return response;
     }
 }

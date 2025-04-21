@@ -1,5 +1,9 @@
-﻿namespace Ordering.Application.Orders.Commands.UpdateOrder;
-public class UpdateOrderHandler(IApplicationDbContext dbContext)
+﻿using Ordering.Application.Repositories;
+
+namespace Ordering.Application.Orders.Commands.UpdateOrder;
+public class UpdateOrderHandler(
+    IOrderRepository orderRepository, 
+    IApplicationDbContext dbContext)
     : ICommandHandler<UpdateOrderCommand, UpdateOrderResult>
 {
     public async Task<UpdateOrderResult> Handle(UpdateOrderCommand command, CancellationToken cancellationToken)
@@ -8,10 +12,7 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
         //save to database
         //return result
 
-        var orderId = OrderId.Of(command.Order.Id);
-        var order = await dbContext.Orders
-            .FindAsync([orderId], cancellationToken: cancellationToken);
-
+        var order = await orderRepository.GetByIdAsync(command.Order.Id, cancellationToken: cancellationToken);
         if (order is null)
         {
             throw new OrderNotFoundException(command.Order.Id);
@@ -19,11 +20,34 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
 
         UpdateOrderWithNewValues(order, command.Order);
 
-        dbContext.Orders.Update(order);
+        orderRepository.Update(order);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdateOrderResult(true);
     }
+
+    //public async Task<UpdateOrderResult> Handle(UpdateOrderCommand command, CancellationToken cancellationToken)
+    //{
+    //    //Update Order entity from command object
+    //    //save to database
+    //    //return result
+
+    //    var orderId = OrderId.Of(command.Order.Id);
+    //    var order = await dbContext.Orders
+    //        .FindAsync([orderId], cancellationToken: cancellationToken);
+
+    //    if (order is null)
+    //    {
+    //        throw new OrderNotFoundException(command.Order.Id);
+    //    }
+
+    //    UpdateOrderWithNewValues(order, command.Order);
+
+    //    dbContext.Orders.Update(order);
+    //    await dbContext.SaveChangesAsync(cancellationToken);
+
+    //    return new UpdateOrderResult(true);
+    //}
 
     public void UpdateOrderWithNewValues(Order order, OrderDto orderDto)
     {

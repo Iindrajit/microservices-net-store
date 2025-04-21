@@ -16,7 +16,9 @@ public class Order : Aggregate<OrderId>
         private set { }
     }
 
-    public static Order Create(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment)
+    public string OrderNumber { get; private set; } = default!;
+
+    public static Order Create(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, string orderNumber)
     {
         var order = new Order
         {
@@ -26,7 +28,8 @@ public class Order : Aggregate<OrderId>
             ShippingAddress = shippingAddress,
             BillingAddress = billingAddress,
             Payment = payment,
-            Status = OrderStatus.Pending
+            Status = OrderStatus.Pending,
+            OrderNumber = orderNumber
         };
 
         order.AddDomainEvent(new OrderCreatedEvent(order));

@@ -1,0 +1,209 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:8081"
+  },
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/products?pageNumber={pageNumber}&pageSize={pageSize}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/catalogs?pageNumber={pageNumber}&pageSize={pageSize}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": { "TtlSeconds": 30 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/products/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/catalogs/{id}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/products/category/{category}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/catalogs/category/{category}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    //Basket API
+    {
+      "DownstreamPathTemplate": "/basket/{userName}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "basket.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/basket/{userName}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/basket",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "basket.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/basket",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/basket/checkout",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "basket.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/basket/checkout",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "3s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    //Ordering
+    {
+      "DownstreamPathTemplate": "/orders?PageIndex={pageIndex}&PageSize={pageSize}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ordering.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/orders?pageIndex={pageIndex}&pageSize={pageSize}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "3s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/orders/{orderName}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ordering.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/orders/{orderName}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "3s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/orders/customer/{customerId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ordering.api",
+          "Port": "8081"
+        }
+      ],
+      "UpstreamPathTemplate": "/orders/customer/{customerId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "3s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AppGatewayAuthenticationScheme",
+        "AllowedScopes": []
+      },
+      "DelegatingHandlers": [
+        "TokenExchangeDelegatingHandler"
+      ]
+    }
+  ]
+}

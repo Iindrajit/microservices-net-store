@@ -20,8 +20,10 @@ public class CreateProductEndpoint : ICarterModule
                 return Results.Created($"/products/{response.Id}", response);
 
             })
+        .RequireAuthorization()
         .WithName("CreateProduct")
         .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Create Product")
         .WithDescription("Create Product");

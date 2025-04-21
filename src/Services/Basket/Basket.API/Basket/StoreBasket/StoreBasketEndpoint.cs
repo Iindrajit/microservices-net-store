@@ -17,10 +17,12 @@ public class StoreBasketEndpoints : ICarterModule
 
             return Results.Created($"/basket/{response.UserName}", response);
         })
-        .WithName("CreateProduct")
+        .RequireAuthorization()
+        .WithName("StoreBasket")
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
         .Produces<StoreBasketResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
-        .WithSummary("Create Product")
-        .WithDescription("Create Product");
+        .WithSummary("Store User's Basket")
+        .WithDescription("Creates or updates a user's shopping basket.");
     }
 }

@@ -60,7 +60,7 @@ namespace Basket.API.Service
                 }
 
                 // Delay before polling again
-                await Task.Delay(TimeSpan.FromSeconds(15), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
             }
         }
     }

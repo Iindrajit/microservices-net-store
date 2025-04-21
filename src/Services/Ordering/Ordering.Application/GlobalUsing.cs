@@ -1,6 +1,6 @@
 ﻿global using FluentValidation;
 global using MediatR;
-global using Microsoft.EntityFrameworkCore;
+//global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +16,7 @@ global using Ordering.Domain.ValueObjects;
 global using Ordering.Application.Exceptions;
 global using Ordering.Domain.Events;
 global using Ordering.Application.Extensions;
+global using Ordering.Application.Repositories;
 
 
 

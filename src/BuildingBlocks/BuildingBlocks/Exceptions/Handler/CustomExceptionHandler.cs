@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace BuildingBlocks.Exceptions.Handler;
 public class CustomExceptionHandler
@@ -11,9 +12,11 @@ public class CustomExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
     {
-        logger.LogError(
-            "Error Message: {exceptionMessage}, Time of occurrence {time}",
-            exception.Message, DateTime.UtcNow);
+        var traceId = Activity.Current?.TraceId.ToString() ?? context.TraceIdentifier;
+
+        logger.LogError(exception,
+            "Error Message: {exceptionMessage}, Time of occurrence {time}. TraceId: {TraceId}",
+            exception.Message, DateTime.UtcNow, traceId);
 
         (string Detail, string Title, int StatusCode) details = exception switch
         {
@@ -57,7 +60,7 @@ public class CustomExceptionHandler
             Instance = context.Request.Path
         };
 
-        problemDetails.Extensions.Add("traceId", context.TraceIdentifier);
+        problemDetails.Extensions.Add("traceId", traceId);
 
         if (exception is ValidationException validationException)
         {

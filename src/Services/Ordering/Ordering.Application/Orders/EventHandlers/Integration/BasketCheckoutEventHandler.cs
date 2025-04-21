@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Messaging.Events;
 using MassTransit;
 using Ordering.Application.Orders.Commands.CreateOrder;
+using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders.EventHandlers.Integration;
 public class BasketCheckoutEventHandler
@@ -37,7 +38,7 @@ public class BasketCheckoutEventHandler
             BillingAddress: addressDto,
             Payment: paymentDto,
             Status: Ordering.Domain.Enums.OrderStatus.Pending,
-            OrderItems: orderItems);
+        OrderItems: orderItems);
 
         return new CreateOrderCommand(orderDto);
     }

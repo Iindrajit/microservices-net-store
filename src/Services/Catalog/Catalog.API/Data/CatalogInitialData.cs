@@ -18,7 +18,7 @@ public class CatalogInitialData : IInitialData
 
     private static IEnumerable<Product> GetPreconfiguredProducts() => new List<Product>()
             {
-                new Product()
+        new Product()
                 {
                     Id = new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61"),
                     Name = "IPhone X",

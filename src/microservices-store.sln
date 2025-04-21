@@ -37,6 +37,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpApiGateway", "ApiGateways\YarpApiGateway\YarpApiGateway.csproj", "{538434B7-090D-4A85-9577-4EC761950453}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{17212850-451E-4E57-B1FF-A48512ADB11D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Web", "WebApps\Shopping.Web\Shopping.Web.csproj", "{A8889962-A746-4D5B-B699-210B0D54614B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{DCA53F0A-8864-448B-938B-DD3C7603A241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingGateway", "ApiGateways\ShoppingGateway\ShoppingGateway.csproj", "{E987BB31-CC48-4A38-9182-546196D79EC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cert-creation", "cert-creation", "{FF074869-8B8C-466D-BCCC-0B9D04FAB8AF}"
+	ProjectSection(SolutionItems) = preProject
+		cert-creation\cr-id-local.conf = cert-creation\cr-id-local.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +100,18 @@ Global
 		{538434B7-090D-4A85-9577-4EC761950453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{538434B7-090D-4A85-9577-4EC761950453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{538434B7-090D-4A85-9577-4EC761950453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8889962-A746-4D5B-B699-210B0D54614B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8889962-A746-4D5B-B699-210B0D54614B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8889962-A746-4D5B-B699-210B0D54614B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8889962-A746-4D5B-B699-210B0D54614B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA53F0A-8864-448B-938B-DD3C7603A241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA53F0A-8864-448B-938B-DD3C7603A241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA53F0A-8864-448B-938B-DD3C7603A241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA53F0A-8864-448B-938B-DD3C7603A241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E987BB31-CC48-4A38-9182-546196D79EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E987BB31-CC48-4A38-9182-546196D79EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E987BB31-CC48-4A38-9182-546196D79EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E987BB31-CC48-4A38-9182-546196D79EC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +129,8 @@ Global
 		{A3811672-AEE6-496C-899D-36EBB81B7082} = {C25879E7-7D97-4391-BBF5-393ED25962D0}
 		{0CFD11FD-4A1F-4150-BB9C-0A848867D2B0} = {C25879E7-7D97-4391-BBF5-393ED25962D0}
 		{538434B7-090D-4A85-9577-4EC761950453} = {67E97A2F-27CD-41CA-AD34-86D0392F0933}
+		{A8889962-A746-4D5B-B699-210B0D54614B} = {17212850-451E-4E57-B1FF-A48512ADB11D}
+		{E987BB31-CC48-4A38-9182-546196D79EC9} = {67E97A2F-27CD-41CA-AD34-86D0392F0933}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17AA2290-49B5-46D8-9161-375A8C0B32C1}

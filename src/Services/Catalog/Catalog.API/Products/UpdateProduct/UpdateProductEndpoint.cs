@@ -18,8 +18,10 @@ public class UpdateProductEndpoint : ICarterModule
 
                 return Results.Ok(response);
             })
+            .RequireAuthorization()
             .WithName("UpdateProduct")
             .Produces<UpdateProductResponse>(StatusCodes.Status200OK)
+            .ProducesProblem(StatusCodes.Status401Unauthorized)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Update Product")

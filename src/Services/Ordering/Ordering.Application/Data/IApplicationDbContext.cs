@@ -1,13 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Ordering.Domain.Models;
-
-namespace Ordering.Application.Data;
+﻿namespace Ordering.Application.Data;
 public interface IApplicationDbContext
 {
-    DbSet<Customer> Customers { get; }
-    DbSet<Product> Products { get; }
-    DbSet<Order> Orders { get; }
-    DbSet<OrderItem> OrderItems { get; }
+    /// <summary>
+    /// Adds an entity to the context.
+    /// </summary>
+    void Add<TEntity>(TEntity entity) where TEntity : class;
 
+    /// <summary>
+    /// Updates an entity in the context.
+    /// </summary>
+    void Update<TEntity>(TEntity entity) where TEntity : class;
+
+    /// <summary>
+    /// Removes an entity from the context.
+    /// </summary>
+    void Remove<TEntity>(TEntity entity) where TEntity : class;
+
+    /// <summary>
+    /// Retrieves all entities of a given type as a queryable.
+    /// </summary>
+    IQueryable<TEntity> Query<TEntity>() where TEntity : class;
+
+    /// <summary>
+    /// Saves changes to the database.
+    /// </summary>
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

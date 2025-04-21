@@ -17,7 +17,7 @@ internal class InitialData
             Product.Create(ProductId.Of(new Guid("6ec1297b-ec0a-4aa1-be25-6726e3b51a27")), "Xiaomi Mi", 450)
         };
 
-    public static IEnumerable<Order> OrdersWithItems
+    /*public static IEnumerable<Order> OrdersWithItems
     {
         get
         {
@@ -49,5 +49,5 @@ internal class InitialData
 
             return new List<Order> { order1, order2 };
         }
-    }
+    } */
 }

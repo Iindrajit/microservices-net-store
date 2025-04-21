@@ -17,4 +17,29 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(builder);
     }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    void IApplicationDbContext.Add<TEntity>(TEntity entity) where TEntity : class
+    {
+        Set<TEntity>().Add(entity);
+    }
+
+    void IApplicationDbContext.Update<TEntity>(TEntity entity)
+    {
+        Set<TEntity>().Update(entity);
+    }
+
+    void IApplicationDbContext.Remove<TEntity>(TEntity entity)
+    {
+        Set<TEntity>().Remove(entity);
+    }
+
+    public IQueryable<TEntity> Query<TEntity>() where TEntity : class
+    {
+        return Set<TEntity>().AsQueryable();
+    }
 }
